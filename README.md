@@ -21,7 +21,7 @@ Please download the datasets mentioned in the HW instruction:
 - [data](https://drive.google.com/drive/folders/1RAWWGTI7ciFkQfl3P9TSlC8Wm-seZYrN)
 
 
-First, `mkdir data`, put the downloaded data into the `./data` folder. The file structure should be like this:
+First, make a data folder `mkdir data`; then, put the downloaded data into the `./data` folder. The file structure should be like this:
 
 ``` 
 -- data
@@ -73,24 +73,24 @@ I can run the above commands on the single-GPU server (with only 20 GB). You can
 
 ### 3. Results
 
-The results are saved in `./out/cls` .
+The results are saved in `./out/cls` . For example, you can find the performance of `t5-3b` in file `./out/cls/t5-3b/predict_results.json`.
 
-**Renze: I have tried with different size T5 encoder. You guys can feel free to use any other encoder model.**
+**I have tried with different size T5 encoder. You guys can feel free to use any other encoder model.**
 
 The current performances by me are as follows:
 
 | Encoder Model    | ACC      | F1       |
 |----------|----------|----------|
-| T5-small | 84.031   | 81.2343  |
-| T5-base  | 84.3411  | 81.1029  |
-| T5-large | 82.5581  | 78.8023  |
-| T5-3b    | **85.5039**  | **82.4379**  |
+| T5-small | 84.03   | 81.23  |
+| T5-base  | 84.34  | 81.10  |
+| T5-large | 82.55  | 78.80  |
+| T5-3b    | **85.50**  | **82.43**  |
 
 
 
 ### 4. How to improve the performance?
 
-Our current accuracy on the test set is already high (~85%). To further improve the performance, among the 5 hints mentioned in the HW instruction, I guess the following three directions are more effective (according to my experience):
+**Our current accuracy on the test set is already high (~85%)**. To further improve the performance, among the 5 hints mentioned in the HW instruction, I guess the following three directions are more effective for performance improvement (according to my experience):
 
 - **Data augmentation**: according to the performances I got, it seems like the larger model can not achieve significantly better performance than the smaller model. So, I guess this is due to the limited training data. 
 - **Additional data**: similarly, try to use the additional data under `Other-dialogue-transcripts`.
