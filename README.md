@@ -68,7 +68,7 @@ sh scripts/run_sen_cls.sh 7 4 t5-3b 1e-4       ### T5-XL
 
 Please adjust the hyperparameters according to your needs, such as the enocder model, learning rate, batch size, etc.
 
-I can run the above commands on the single-GPU server (with only 20K MiB). You can adjust the batch size to fit your GPU memory.
+I can run the above commands on the single-GPU server (with only 20 GB). You can adjust the batch size to fit your GPU memory.
 
 
 ### 3. Results
