@@ -21,3 +21,5 @@ bash shells/agqa_v2_mist.sh`
 ```
 
 # Results
+For the results please view:
+https://wandb.ai/jkys/CSE_582_course_project-VL_py/reports/Mist---Vmlldzo3NTM3NjA5
