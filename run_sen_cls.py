@@ -171,7 +171,9 @@ class DataTrainingArguments:
         elif self.dataset_name is not None:
             pass
         elif self.train_file is None or self.validation_file is None:
-            raise ValueError("Need either a GLUE task, a training/validation file or a dataset name.")
+            train_extension = self.train_file.split(".")[-1]
+            assert train_extension in ["csv", "json"], "`train_file` should be a csv or a json file."
+            # raise ValueError("Need either a GLUE task, a training/validation file or a dataset name.")
         else:
             train_extension = self.train_file.split(".")[-1]
             assert train_extension in ["csv", "json"], "`train_file` should be a csv or a json file."
@@ -254,7 +256,7 @@ def main():
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-
+    print(training_args)
     # Sending telemetry. Tracking the example usage helps us better allocate resources to maintain them. The
     # information sent is the one passed as arguments along with your Python/PyTorch versions.
     # send_example_telemetry("run_glue", model_args, data_args)
@@ -339,8 +341,11 @@ def main():
     else:
         # Loading a dataset from your local files.
         # CSV/JSON training and evaluation files are needed.
-        data_files = {"train": data_args.train_file, "validation": data_args.validation_file}
-
+        if data_args.validation_file is not None:
+            data_files = {"train": data_args.train_file, "validation": data_args.validation_file}
+        else:
+            data_files = {"train": data_args.train_file}
+         
         # Get the test dataset: you can provide your own CSV/JSON test file (see below)
         # when you use `do_predict` without specifying a GLUE benchmark task.
         if training_args.do_predict:
@@ -358,6 +363,8 @@ def main():
             logger.info(f"load a local file for {key}: {data_files[key]}")
 
         if data_args.train_file.endswith(".csv"):
+            print(data_files)
+            
             # Loading a dataset from local csv files
             raw_datasets = load_dataset(
                 "csv",
