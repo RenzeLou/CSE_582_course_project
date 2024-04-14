@@ -34,18 +34,7 @@ def save_nli_data_csv(ins_list:list,path:str):
         writer = csv.writer(csvfile)
 
         # columns name
-        writer.writerow(["question", "answer",  "question_id",'answer_type', "video_id"])
-        # all instances
-        writer.writerows(ins_list)
-
-def save_t2t_data_csv(ins_list:list,path:str):
-    assert path.endswith(".csv"), "should be a csv file."
-    
-    with open(path,"w") as csvfile: 
-        writer = csv.writer(csvfile)
-
-        # columns name
-        writer.writerow(["question", "answer",  "question_id",'answer_type', "video_id"])
+        writer.writerow(["question", "answer",  "question_id",'answer_type', "video_id", 'u1_intent', 'u2_intent', 'switched_1', 'switched_2'])
         # all instances
         writer.writerows(ins_list)
 
@@ -60,7 +49,8 @@ def main():
     parser.add_argument("--seed",type=int,default=42)
     parser.add_argument("--split",action="store_true",default=False)
     parser.add_argument("--shuffle",type=bool,default=True)
-
+    parser.add_argument("--switch_with_intent",type=bool,default=True)
+    parser.add_argument("--append_intent",type=bool,default=False)
     args, unparsed = parser.parse_known_args()
     if unparsed:
         raise ValueError(unparsed)
@@ -95,12 +85,26 @@ def main():
         # convert the utt (string) to the dict
         utt_1 = string_to_dict(utt_1)
         utt_2 = string_to_dict(utt_2)
+        int_1 = utt_1['intent']
+        int_2 = utt_2['intent']
+        switch_1 = 0
+        switch_2 = 0
+        if args.switch_with_intent:
+            if utt_1['text'] == '': 
+                utt_1['text'] = int_1
+                switch_1 = 1
+            if utt_2['text'] == '': 
+                utt_2['text'] = int_2
+                switch_2 = 1
+        elif args.append_intent:
+                utt_1['text'] = int_1+','+utt_1['text']
+                utt_2['text'] = int_2+','+utt_2['text']
         label = label.strip()
         assert label in ["0","1"], "assert label should be 0 or 1. but got {}".format(label)
         text_1 = utt2text(utt_1)
         text_2 = utt2text(utt_2)
         #["question", "question_id","answer",  'answer_type', "video_id"])
-        train_samples.append((text_1+' '+text_2,label,i, 'binary', cate))
+        train_samples.append((text_1+' '+text_2,label,i, 'binary', cate, int_1, int_2, switch_1, switch_2))
     
     if args.shuffle:
         combined = list(zip(train_samples, train_data))
@@ -123,11 +127,26 @@ def main():
         label, cate, utt_1, utt_2 = ins[0], ins[1], ins[2], ins[3]
         utt_1 = string_to_dict(utt_1)
         utt_2 = string_to_dict(utt_2)
+        int_1 = utt_1['intent']
+        int_2 = utt_2['intent']
+        switch_1 = 0
+        switch_2 = 0
+        if args.switch_with_intent:
+            if utt_1['text'] == '': 
+                utt_1['text'] = int_1
+                switch_1 = 1
+            if utt_2['text'] == '': 
+                utt_2['text'] = int_2
+                switch_2 = 1
+        elif args.append_intent:
+                utt_1['text'] = int_1+utt_1['text']
+                utt_2['text'] = int_2+utt_2['text']
         label = label.strip()
         assert label in ["0","1"], "assert label should be 0 or 1. but got {}".format(label)
         text_1 = utt2text(utt_1)
         text_2 = utt2text(utt_2)
-        test_samples.append((text_1+'. '+text_2,label,i, 'binary', cate))
+        
+        test_samples.append((text_1+'. '+text_2,label,i, 'binary', cate, int_1, int_2, switch_1, switch_2))
         
     #get frame size
     

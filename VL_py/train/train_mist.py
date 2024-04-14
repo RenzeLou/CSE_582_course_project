@@ -7,7 +7,7 @@ import os
 import json
 import evaluate
 from util import compute_aggreeings, AverageMeter, get_mask, mask_tokens
-
+import wandb
 from IPython.core.debugger import Pdb
 dbg = Pdb()
 
@@ -104,10 +104,12 @@ def eval(model, val_loader, a2v, args, test=False):
     json.dump(results, open(os.path.join(args.save_dir, f"val-{acc:.5%}.json"), "w"))
     
 
-    return metrics["accuracy"]
+    return metrics
 
 
 def train(model, train_loader, a2v, optimizer, criterion, scheduler, epoch, args, val_loader=None, best_val_acc=None, best_epoch=None):
+    
+    wandb.init()
     model.train()
     running_vqa_loss, running_acc, running_mlm_loss = (
         AverageMeter(),
@@ -208,13 +210,16 @@ def train(model, train_loader, a2v, optimizer, criterion, scheduler, epoch, args
                     f"Epoch {epoch + 1}, Epoch status: {float(i + 1) / len(train_loader):.4f}, Training VideoQA loss: "
                     f"{running_vqa_loss.avg:.4f}, Training acc: {running_acc.avg:.2%}"
                 )
+            wandb.log({"training_acc": running_acc.avg, 'loss':running_vqa_loss.avg} )
             running_acc.reset()
             running_vqa_loss.reset()
             running_mlm_loss.reset()
-
-
+            
+            
         if val_loader is not None and ((i + 1) % (len(train_loader) // args.freq_display ) == 0):
-            val_acc = eval(model, val_loader, a2v, args, test=False)
+            metrics = eval(model, val_loader, a2v, args, test=False)
+            wandb.log(metrics)
+            val_acc = metrics['accuracy'] 
             if val_acc > best_val_acc:
                 best_val_acc = val_acc
                 best_epoch = epoch

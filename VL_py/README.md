@@ -1,5 +1,5 @@
 # Enviroment setup
-
+pip install -r requirements.txt
 
 ## install clip
 ```bash
@@ -17,5 +17,7 @@ bash shells/data_preprocess.sh`
 
 # running
 ```bash
-bash shells/data_preprocess.sh`
+bash shells/agqa_v2_mist.sh`
 ```
+
+# Results

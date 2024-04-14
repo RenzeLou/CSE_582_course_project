@@ -31,7 +31,6 @@ logging.info(args)
 torch.manual_seed(args.seed)
 np.random.seed(args.seed)
 random.seed(args.seed)
-wandb.init()
 # get answer embeddings
 bert_tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 a2id, id2a, a2v = None, None, None

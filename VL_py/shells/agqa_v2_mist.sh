@@ -4,10 +4,10 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 PRJDIR=$SCRIPT_DIR/../../
 CUDA_VISIBLE_DEVICES=6 python $PRJDIR/VL_py/main_agqa_v2.py --dataset_dir="$PRJDIR/data/" \
 	--feature_dir="$PRJDIR/data/"  \
-	--checkpoint_dir="$PRJDIR/data/save_models_mist" \
+	--checkpoint_dir="$PRJDIR/data/aug_intent" \
 	--dataset= \
 	--mc=0 \
-	--epochs=30 \
+	--epochs=20 \
 	--lr=0.00003 \
 	--qmax_words=395 \
 	--amax_words=5 \
@@ -23,7 +23,7 @@ CUDA_VISIBLE_DEVICES=6 python $PRJDIR/VL_py/main_agqa_v2.py --dataset_dir="$PRJD
 	--dropout=0.3 \
 	--seed=42 \
 	--freq_display=2 \
-	--save_dir="$PRJDIR/data/save_models_mist/" \
+	--save_dir="$PRJDIR/data/aug_intent" \
 	# --test=1
 
 
