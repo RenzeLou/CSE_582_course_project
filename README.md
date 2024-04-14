@@ -93,6 +93,15 @@ The current performances by me are as follows:
 | T5-large | 82.55  | 78.80  |
 | T5-3b    | **85.50**  | **82.43**  |
 
+Experimental Result:
+| Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
+|----------|----------|----------|----------|----------|
+| T5-small | ACC:83.876 F1:81.2596   | ACC:85.5814 F1:82.9596  |ACC:83.876 F1:81.1051   | ACC:84.3411 F1:81.2468  |
+| T5-base  | ACC: F1:   | ACC: F1:  |ACC: F1:   | ACC: F1:  |
+| T5-large | 82.55  | 78.80  |
+
+
+
 
 
 ### 4. How to improve the performance?
