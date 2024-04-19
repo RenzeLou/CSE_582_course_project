@@ -101,6 +101,7 @@ Experimental Result:
 | roberta-base | ACC:84.4    F1:74.5 Precision:74.6  Recall:74.4  | ACC:85.3    F1:75.7 Precision:76.5  Recall:74.9 |ACC:84.8    F1:74.2  Precision:77.1   Recall:71.6 | ACC:85.0    F1:74.2 Precision:78.5  Recall:70.3 |
 | distilroberta-base | ACC:83.6    F1:72.5  Precision:74.6  Recall:70.6 | ACC:85.4    F1:75.5 Precision:77.7  Recall:73.4 |ACC:84.9    F1:73.8  Precision:76.3  Recall:70.8 | ACC:85.5    F1:74.9 Precision:79.7  Recall:70.6 |
 
+![image](https://github.com/RenzeLou/CSE_582_course_project/assets/36984321/93df4783-4abd-4ba5-95aa-26007a917411)
 
 
 
