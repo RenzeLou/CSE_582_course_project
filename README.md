@@ -1,5 +1,6 @@
 This repository contains a basic pipeline for the binary classification task (mentioned in [CSE 582 final project instruction](https://psu.instructure.com/courses/2309886/assignments/15994501)), where I use a language model encoder (i.e., [T5](https://huggingface.co/docs/transformers/model_doc/t5)) with a simple linear classifier head. 
-For the mist model, please cd to VL_PY and follow the mist installation instructions. 
+
+**For the mist model, please cd to VL_PY and follow the mist installation instructions.**
 
 The metrics are accuracy and F1 score.
 
