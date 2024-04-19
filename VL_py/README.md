@@ -27,8 +27,8 @@ bash shells/experiment.sh`
 # Model architechture
 The learning rate is set to 3e-5
 Hyperparameters:
-
-Epochs: 20
+```
+Epochs: 20 
 Learning rate (lr): 0.00003
 Maximum words in question (qmax_words): 395
 Maximum words in answer (amax_words): 5
@@ -43,6 +43,7 @@ Feed-forward dimension (ff_dim): 1024
 Feature dimension: 512
 Dropout rate: 0.3
 Random seed: 42
+```
 # Results
 For the results please view:
 Overall, Adding intent label helps to improve the accuracy by around 1%. (83 to 84-85)
