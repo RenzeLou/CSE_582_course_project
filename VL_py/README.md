@@ -1,3 +1,4 @@
+This is an adaption of the original mist model (https://github.com/showlab/mist/tree/main)
 # Enviroment setup
 pip install -r requirements.txt
 
@@ -24,7 +25,7 @@ bash shells/VL_classfication.sh`
 bash shells/experiment.sh`
 ```
 
-# Model architechture
+# Model Hyperparameter
 The learning rate is set to 3e-5
 Hyperparameters:
 ```
