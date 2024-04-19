@@ -4,9 +4,6 @@ This repository contains a basic pipeline for the binary classification task (me
 
 The metrics are accuracy and F1 score.
 
->Note:
-
-
 ## Environment
 
 - Python 3.8.0
