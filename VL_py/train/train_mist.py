@@ -6,25 +6,22 @@ import collections
 import os
 import json
 import evaluate
+from sklearn.metrics import recall_score, precision_score, f1_score, accuracy_score
 from util import compute_aggreeings, AverageMeter, get_mask, mask_tokens
 import wandb
 from IPython.core.debugger import Pdb
+import numpy as np
 dbg = Pdb()
+from prettytable import PrettyTable
 
 def eval(model, val_loader, a2v, args, test=False):
     model.eval()
     count = 0
     metrics, counts = collections.defaultdict(int), collections.defaultdict(int)
     results = {}
-    acc_metric = evaluate.load("accuracy")
-    f_metric = evaluate.load("f1")
-    r_metric = evaluate.load('recall')
-    p_metric = evaluate.load('precision')
-    def metric_add(predictions, references):
-        acc_metric.add(prediction = predictions, references=references)
-        f_metric.add(prediction = predictions, references=references)
-        r_metric.add(prediction = predictions, references=references)
-        p_metric.add(prediction = predictions, references=references)
+
+    yhat = []
+    y = []
     with torch.no_grad():
         if not args.mc:
             model.module._compute_answer_embedding(a2v)
@@ -55,51 +52,63 @@ def eval(model, val_loader, a2v, args, test=False):
                 else:
                     answer_id = (answer_id / 2).clamp(max=1)
                     answer_id_expanded = answer_id
-                # metrics = compute_aggreeings(
-                #     topk,
-                #     answer_id_expanded,
-                #     [1, 10],
-                #     ["acc", "acc10"],
-                #     metrics,
-                #     ivqa=(args.dataset == "ivqa"),
-                # )
+
                 predicted = torch.max(predicts, dim=1).indices.cpu()
-                acc_metric.add_batch(predictions = predicted, references=answer_id)
-                f_metric.add_batch(predictions = predicted, references=answer_id)
-                r_metric.add_batch(predictions = predicted, references=answer_id)
-                p_metric.add_batch(predictions = predicted, references=answer_id)
+                # print('all', predicted, answer_id)
+                # print('label0', predicted[~answer_id], answer_id[~answer_id])
+                # print('label1', predicted[answer_id], answer_id[answer_id])
+                # input()
+                yhat.extend(predicted.tolist())
+                y.extend(answer_id.tolist())
+                # print(yhat, y)
 
                 for bs, qid in enumerate(batch['question_id']):
                     results[qid] = {'prediction': int(topk.numpy()[bs,0]), 'answer':int(answer_id.numpy()[bs])}
-            else:
-                fusion_proj, answer_proj = model(
-                    video,
-                    question,
-                    text_mask=question_mask,
-                    # video_mask=video_mask,
-                    answer=answer.cuda(),
-                    question_clip=question_clip
-                )
-                fusion_proj = fusion_proj.unsqueeze(2)
-                predicts = torch.bmm(answer_proj, fusion_proj).squeeze()
-                predicted = torch.max(predicts, dim=1).indices.cpu()
-                metrics["acc"] += (predicted == answer_id).sum().item()
+
+            # else:
+            #     fusion_proj, answer_proj = model(
+            #         video,
+            #         question,
+            #         text_mask=question_mask,
+            #         # video_mask=video_mask,
+            #         answer=answer.cuda(),
+            #         question_clip=question_clip
+            #     )
+            #     fusion_proj = fusion_proj.unsqueeze(2)
+            #     predicts = torch.bmm(answer_proj, fusion_proj).squeeze()
+            #     predicted = torch.max(predicts, dim=1).indices.cpu()
+            #     metrics["acc"] += (predicted == answer_id).sum().item()
                
-                for bs, qid in enumerate(batch['question_id']):
-                    results[qid] = {'prediction': int(predicted.numpy()[bs]), 'answer':int(answer_id.numpy()[bs])}
+            #     for bs, qid in enumerate(batch['question_id']):
+            #         results[qid] = {'prediction': int(predicted.numpy()[bs]), 'answer':int(answer_id.numpy()[bs])}
 
 
     step = "val" if not test else "test"
     # print(acc_metric)
-    metrics.update(acc_metric.compute())
-    metrics.update(f_metric.compute(average='macro'))
-    metrics.update(r_metric.compute(average='macro'))
-    metrics.update(p_metric.compute(average='macro'))
+
+    f1 = np.append(f1_score(y_pred=yhat,y_true=y,zero_division=1, average='macro'), f1_score(y_pred=yhat,y_true=y,zero_division=1, average=None))
+    precision =  np.append(precision_score(y_pred=yhat,y_true=y,zero_division=1, average='macro'), precision_score(y_pred=yhat,y_true=y,zero_division=1, average=None))
+    recall =  np.append(recall_score(y_pred=yhat,y_true=y,zero_division=1, average='macro'), recall_score(y_pred=yhat,y_true=y,zero_division=1, average=None))
     
-    for k in metrics:
-        v = metrics[k]
-        logging.info(f"{step} {k}: {v:.2%}")
-    acc = metrics['accuracy']
+    metrics['overall_accuracy'] = accuracy_score(y_pred=yhat, y_true=y)
+    metrics['overall_f1'] = f1[0]
+    metrics['label_0_f1'] = f1[1]
+    metrics['label_1_f1'] = f1[2]
+    metrics['overall_recall'] = recall[0]
+    metrics['label_0_recall'] = recall[1]
+    metrics['label_1_recall'] = recall[2]
+    metrics['overall_precision'] = precision[0]
+    metrics['label_0_precision'] = precision[1]
+    metrics['label_1_precision'] = precision[2]
+    
+    #metrics table
+    t = PrettyTable(['label', 'accuracy', 'recall', 'precision', 'f1'])
+    t.add_row(['overall', metrics['overall_accuracy'], metrics['overall_recall'], metrics['overall_precision'], metrics['overall_f1']])
+    t.add_row(['label 0', '-', metrics['label_0_recall'], metrics['label_0_precision'], metrics['label_0_f1']])
+    t.add_row(['label 1', '-', metrics['label_1_recall'], metrics['label_1_precision'], metrics['label_1_f1']])
+    t.float_format = ".2f"
+    logging.info(t)
+    acc = metrics['overall_accuracy']
     
     json.dump(results, open(os.path.join(args.save_dir, f"val-{acc:.5%}.json"), "w"))
     
@@ -109,7 +118,7 @@ def eval(model, val_loader, a2v, args, test=False):
 
 def train(model, train_loader, a2v, optimizer, criterion, scheduler, epoch, args, val_loader=None, best_val_acc=None, best_epoch=None):
     
-    wandb.init()
+    wandb.init(name=args.name)
     model.train()
     running_vqa_loss, running_acc, running_mlm_loss = (
         AverageMeter(),

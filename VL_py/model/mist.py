@@ -467,7 +467,7 @@ class ISTA(nn.Module):
         super(ISTA, self).__init__()
         self.topk = topk
         self.numc = 8
-        self.numf = int(32 / self.numc)
+        self.numf = int(64 / self.numc)
         self.topj = topj  # max self.numr is 16
         T = self.numc + (self.topj) * self.topk * self.numf
         self.position = Embeddings(d_model, Q, T, dropout, True)
@@ -607,10 +607,10 @@ class MIST_VideoQA(nn.Module):
         self.topk = topk
         self.topj = topj
         self.numc = numc
-        self.numf = int(32 / self.numc)
+        self.numf = int(64 / self.numc)
         T = 32 + (16) * self.topk * self.numf
         self.position = Embeddings(d_model, Q, T, dropout, True)
-        self.frame_position_embedding = PositionEmbeddings(512, 32, True)
+        self.frame_position_embedding = PositionEmbeddings(512, 64, True)
         self.question_position_embedding = PositionEmbeddings(512, Q, True)
         self.token_type_embedding = TokenTypeEmbeddings(512, 3)
 

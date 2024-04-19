@@ -172,7 +172,9 @@ def get_args():
     parser.add_argument(
         "--feature_dim", type=int, default=2048, help="whether to finetune the weights pretrained on WebVid"
     )
-
+    parser.add_argument(
+         "--name", type=str, default=None, help="name_of_the_run"
+    )
     args = parser.parse_args()
 
     os.environ["TRANSFORMERS_CACHE"] = args.bert_path

@@ -102,10 +102,12 @@ class VideoQADataset(Dataset):
         for j in range(grid_num):
             for i in range(grid_num):
                 patch_bbox.append([i * patch_size, j * patch_size, (i + 1) * patch_size, (j + 1) * patch_size])
-        roi_bbox = np.tile(np.array(patch_bbox), (32, 1)).reshape(32, 16, -1)  # [frame_num, bbox_num, -1]
+        roi_bbox = np.tile(np.array(patch_bbox), (64, 1)).reshape(64, 16, -1)  # [frame_num, bbox_num, -1]
         bbox_feat = transform_bb(roi_bbox, width, height)
         bbox_feat = torch.from_numpy(bbox_feat).type(torch.float32)
-
+        # roi_feat = self.frame_feats[vid_id][:, 1:, :]  # [frame_num, 16, dim]
+        # roi_feat = torch.from_numpy(roi_feat).type(torch.float32)
+        # region_feat = torch.cat((roi_feat, bbox_feat), dim=-1)
         try:
             roi_feat = self.frame_feats[vid_id][:, 1:, :]  # [frame_num, 16, dim]
             roi_feat = torch.from_numpy(roi_feat).type(torch.float32)
@@ -114,9 +116,9 @@ class VideoQADataset(Dataset):
             from IPython.core.debugger import Pdb
             dbg = Pdb()
             dbg.set_trace()
-
+        
         # vid_id = raw_vid_id if raw_vid_id in self.frame_feats else raw_vid_id.strip('.mp4')
-        # print(vid_id)
+        # input()
         frame_feat = self.frame_feats[vid_id][:, 0, :]
         frame_feat = torch.from_numpy(frame_feat).type(torch.float32)
 

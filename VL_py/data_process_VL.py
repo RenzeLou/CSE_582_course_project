@@ -49,8 +49,11 @@ def main():
     parser.add_argument("--seed",type=int,default=42)
     parser.add_argument("--split",action="store_true",default=False)
     parser.add_argument("--shuffle",type=bool,default=True)
-    parser.add_argument("--switch_with_intent",type=bool,default=True)
+    parser.add_argument("--switch_with_intent",type=bool,default=False)
     parser.add_argument("--append_intent",type=bool,default=False)
+    parser.add_argument("--use_augmented",type=bool,default=False)
+    parser.add_argument("--add_vid_type_label",type=bool,default=False)
+
     args, unparsed = parser.parse_known_args()
     if unparsed:
         raise ValueError(unparsed)
@@ -65,9 +68,12 @@ def main():
     np.random.seed(seed)
     
     os.makedirs(target_path,exist_ok=True)
+    train_file_name = 'train'
+    if args.use_augmented:
+        train_file_name = 'train_aug'
 
     # open csv file
-    with open(os.path.join(source_path,"train" ,"train.csv"),"r") as f:
+    with open(os.path.join(source_path,"train",train_file_name+".csv"),"r") as f:
         reader = csv.reader(f)
         train_data = list(reader)
     with open(os.path.join(source_path, "test" ,"test.csv"),"r") as f:
@@ -99,12 +105,19 @@ def main():
         elif args.append_intent:
                 utt_1['text'] = int_1+','+utt_1['text']
                 utt_2['text'] = int_2+','+utt_2['text']
+
         label = label.strip()
         assert label in ["0","1"], "assert label should be 0 or 1. but got {}".format(label)
         text_1 = utt2text(utt_1)
         text_2 = utt2text(utt_2)
-        #["question", "question_id","answer",  'answer_type', "video_id"])
-        train_samples.append((text_1+' '+text_2,label,i, 'binary', cate, int_1, int_2, switch_1, switch_2))
+        
+        vid_type_to_text = {'0':'no confusion:', '1':'cognitive overload:', '2':'wrong object:', '3':'wrong location:'}
+        if args.add_vid_type_label:
+            vid_type = vid_type_to_text[cate[-1]]
+        else:
+            vid_type = ''
+        #["question", "answer",  "question_id",'answer_type', "video_id", 'u1_intent', 'u2_intent', 'switched_1', 'switched_2']
+        train_samples.append((vid_type + text_1+' '+text_2,label,i, 'binary', cate, int_1, int_2, switch_1, switch_2))
     
     if args.shuffle:
         combined = list(zip(train_samples, train_data))
@@ -145,8 +158,14 @@ def main():
         assert label in ["0","1"], "assert label should be 0 or 1. but got {}".format(label)
         text_1 = utt2text(utt_1)
         text_2 = utt2text(utt_2)
-        
-        test_samples.append((text_1+'. '+text_2,label,i, 'binary', cate, int_1, int_2, switch_1, switch_2))
+        #["question", "answer",  "question_id",'answer_type', "video_id", 'u1_intent', 'u2_intent', 'switched_1', 'switched_2']
+        vid_type_to_text = {'0':'no confusion:', '1':'cognitive overload:', '2':'wrong object:', '3':'wrong location:'}
+        if args.add_vid_type_label:
+            vid_type = vid_type_to_text[cate[-1]]
+        else:
+            vid_type = ''
+        #["question", "answer",  "question_id",'answer_type', "video_id", 'u1_intent', 'u2_intent', 'switched_1', 'switched_2']
+        test_samples.append((vid_type + text_1+' '+text_2,label,i, 'binary', cate, int_1, int_2, switch_1, switch_2))
         
     #get frame size
     
