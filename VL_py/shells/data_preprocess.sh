@@ -4,8 +4,8 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 python $SCRIPT_DIR/../data_process_VL.py \
     --source_path $SCRIPT_DIR/../../data/ \
     --target_path $SCRIPT_DIR/../../data/ \
-    --switch_with_intent true \
-    --use_augmented true \
+    --switch_with_intent \
+    --use_augmented \
 
 #cp test data set to eval
 

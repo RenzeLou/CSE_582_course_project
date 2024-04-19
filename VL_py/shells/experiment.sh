@@ -4,8 +4,6 @@ PRJDIR=$SCRIPT_DIR/../../
 python $SCRIPT_DIR/../data_process_VL.py \
     --source_path $SCRIPT_DIR/../../data/ \
     --target_path $SCRIPT_DIR/../../data/ \
-    --switch_with_intent false \
-    --use_augmented false \
 #cp test data set to eval
 cp $SCRIPT_DIR/../../data/test.csv $SCRIPT_DIR/../../data/eval.csv  
 ##vanilla
@@ -14,7 +12,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 	--checkpoint_dir="$PRJDIR/data/original" \
 	--dataset= \
 	--mc=0 \
-	--epochs=30 \
+	--epochs=20 \
 	--lr=0.00003 \
 	--qmax_words=395 \
 	--amax_words=5 \
@@ -41,8 +39,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 python $SCRIPT_DIR/../data_process_VL.py \
     --source_path $SCRIPT_DIR/../../data/ \
     --target_path $SCRIPT_DIR/../../data/ \
-    --switch_with_intent true \
-    --use_augmented false \
+    --switch_with_intent \
 #cp test data set to eval
 cp $SCRIPT_DIR/../../data/test.csv $SCRIPT_DIR/../../data/eval.csv  
 ##vanilla
@@ -51,7 +48,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 	--checkpoint_dir="$PRJDIR/data/intent" \
 	--dataset= \
 	--mc=0 \
-	--epochs=30 \
+	--epochs=20 \
 	--lr=0.00003 \
 	--qmax_words=395 \
 	--amax_words=5 \
@@ -85,8 +82,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 python $SCRIPT_DIR/../data_process_VL.py \
     --source_path $SCRIPT_DIR/../../data/ \
     --target_path $SCRIPT_DIR/../../data/ \
-    --switch_with_intent false \
-    --use_augmented true \
+    --use_augmented \
 #cp test data set to eval
 cp $SCRIPT_DIR/../../data/test.csv $SCRIPT_DIR/../../data/eval.csv  
 ##vanilla
@@ -95,7 +91,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 	--checkpoint_dir="$PRJDIR/data/aug" \
 	--dataset= \
 	--mc=0 \
-	--epochs=30 \
+	--epochs=20 \
 	--lr=0.00003 \
 	--qmax_words=395 \
 	--amax_words=5 \
@@ -112,7 +108,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 	--seed=42 \
 	--freq_display=2 \
 	--save_dir="$PRJDIR/data/aug" \
-	--name='aug'
+	--name='aug' 
 	# --test=1
 
 
@@ -124,8 +120,8 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 python $SCRIPT_DIR/../data_process_VL.py \
     --source_path $SCRIPT_DIR/../../data/ \
     --target_path $SCRIPT_DIR/../../data/ \
-    --switch_with_intent true \
-    --use_augmented true \
+    --switch_with_intent \
+    --use_augmented \
 #cp test data set to eval
 cp $SCRIPT_DIR/../../data/test.csv $SCRIPT_DIR/../../data/eval.csv  
 ##vanilla
@@ -134,7 +130,7 @@ CUDA_VISIBLE_DEVICES=0,1,2 python $PRJDIR/VL_py/main.py --dataset_dir="$PRJDIR/d
 	--checkpoint_dir="$PRJDIR/data/aug_intent" \
 	--dataset= \
 	--mc=0 \
-	--epochs=30 \
+	--epochs=20 \
 	--lr=0.00003 \
 	--qmax_words=395 \
 	--amax_words=5 \
