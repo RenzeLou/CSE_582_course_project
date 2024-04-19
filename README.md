@@ -99,8 +99,8 @@ Experimental Result:
 | T5-small | ACC:83.9    F1:81.3  Precision:80.9 Recall:81.6 | ACC:85.6    F1:83.0 Precision:83.1 Recall:82.8 |ACC:83.9    F1:81.1  Precision:80.9 Recall:81.2 | ACC:84.3    F1:81.2 Precision:81.8 Recall:80.7 |
 | T5-base  | ACC:84.1    F1:80.9  Precision:81.6 Recall:80.2  | ACC:85.7    F1:82.7 Precision:83.6 Recall:81.9  |ACC:83.3    F1:80.1  Precision:80.4 Recall:79.5  | ACC:85.5    F1:82.6 Precision:83.3 Recall:81.9|
 | T5-large | ACC:83.5    F1:80.2 Precision:80.8  Recall:79.5  | ACC:83.8    F1:80.1 Precision:81.7 Recall:78.9 |ACC:84.3    F1:81.3 Precision:81.7 Recall:81.0  | ACC:83.9    F1:80.1 Precision:82.2 Recall:78.6 |
-| roberta-base | ACC:85.6    F1:76.3 Precision:  Recall:  | ACC:86.1    F1:77.1 Precision:  Recall: |ACC:85.4    F1:75  Precision:   Recall:81.0 | ACC:85.2    F1:74.4 Precision:  Recall: |
-| distilroberta-base | ACC:84.3    F1:73.5  Precision:  Recall: | ACC:85.4    F1:75.3 Precision:  Recall: |ACC:84.9    F1:73.8  Precision:  Recall: | ACC:85.1    F1:74.5 Precision:  Recall: |
+| roberta-base | ACC:84.4    F1:74.5 Precision:74.6  Recall:74.4  | ACC:85.3    F1:75.7 Precision:76.5  Recall:74.9 |ACC:84.8    F1:74.2  Precision:77.1   Recall:71.6 | ACC:85.0    F1:74.2 Precision:78.5  Recall:70.3 |
+| distilroberta-base | ACC:83.6    F1:72.5  Precision:74.6  Recall:70.6 | ACC:85.4    F1:75.5 Precision:77.7  Recall:73.4 |ACC:84.9    F1:73.8  Precision:76.3  Recall:70.8 | ACC:85.5    F1:74.9 Precision:79.7  Recall:70.6 |
 
 
 
