@@ -132,8 +132,11 @@ def main():
     print("train samples: {}, eval samples: {}, test samples: {}".format(len(train_samples),len(eval_samples),len(test_samples)))
     save_nli_data_csv(train_samples,os.path.join(target_path,"train.csv"))
     save_nli_data_csv(test_samples,os.path.join(target_path,"test.csv"))
-    # if len(eval_samples) > 0:
-    save_nli_data_csv(eval_samples,os.path.join(target_path,"eval.csv"))
+    if len(eval_samples) == 0: #paste test_samples to eval.csv
+        print('pasting test samples to eval')
+        save_nli_data_csv(test_samples,os.path.join(target_path,"eval.csv"))
+    else:
+        save_nli_data_csv(eval_samples,os.path.join(target_path,"eval.csv"))
         
     print("data saved in {}".format(target_path))
     
