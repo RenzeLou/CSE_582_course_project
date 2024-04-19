@@ -96,11 +96,11 @@ The current performances by me are as follows:
 Experimental Result:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
-| T5-small | ACC:83.876    F1:81.2596   | ACC:85.5814    F1:82.9596  |ACC:83.876    F1:81.1051   | ACC:84.3411    F1:81.2468  |
-| T5-base  | ACC:84.1085    F1:80.8959   | ACC:85.6589    F1:82.7067  |ACC:83.2558    F1:80.0072   | ACC:85.5039    F1:82.5733  |
-| T5-large | ACC:83.4884    F1:80.1504   | ACC:83.7984    F1:80.0857  |ACC:84.3411    F1:81.3584   | ACC:83.9535    F1:80.0774  |
-| roberta-base | ACC:85.6589    F1:76.3124   | ACC:86.124    F1:77.0806  |ACC:85.42635    F1:75   | ACC:85.193798    F1:74.3624  |
-| distilroberta-base | ACC:84.26356    F1:73.5332   | ACC:85.426356    F1:75.2632  |ACC:84.8837209    F1:73.755   | ACC:85.116279    F1:74.4680851  |
+| T5-small | ACC:83.9    F1:81.3   | ACC:85.6    F1:83.0  |ACC:83.9    F1:81.1   | ACC:84.3    F1:81.2  |
+| T5-base  | ACC:84.1    F1:80.9   | ACC:85.7    F1:82.7  |ACC:83.3    F1:80.1   | ACC:85.5    F1:82.6  |
+| T5-large | ACC:83.5    F1:80.2   | ACC:83.8    F1:80.1  |ACC:84.3    F1:81.3   | ACC:83.9    F1:80.1  |
+| roberta-base | ACC:85.6    F1:76.3   | ACC:86.1    F1:77.1  |ACC:85.4    F1:75   | ACC:85.2    F1:74.4  |
+| distilroberta-base | ACC:84.3    F1:73.5   | ACC:85.4    F1:75.3  |ACC:84.9    F1:73.8   | ACC:85.1    F1:74.5  |
 
 
 
