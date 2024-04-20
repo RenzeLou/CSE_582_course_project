@@ -24,11 +24,12 @@ import sys
 from dataclasses import dataclass, field
 from typing import Optional
 import wandb
+from sklearn.metrics import recall_score, precision_score, f1_score, accuracy_score
 import pickle
 import datasets
 import numpy as np
 from datasets import load_dataset
-
+from prettytable import PrettyTable
 import evaluate
 import transformers
 from transformers import (
@@ -234,6 +235,10 @@ class ModelArguments:
         default=0.2,
         metadata={"help": "dropout rate for classification head."}
     )
+    name: str = field(
+        default="",
+        metadata={"help": "model name for wandb"}
+    )
 
 @dataclass
 class SelfTrainingArguments(TrainingArguments):
@@ -261,7 +266,7 @@ def main():
     # information sent is the one passed as arguments along with your Python/PyTorch versions.
     # send_example_telemetry("run_glue", model_args, data_args)
 
-    # wandb.init(mode="disabled")
+    wandb.init(name = model_args.name)
     
     is_regression = False  # set it globally
     
@@ -540,10 +545,6 @@ def main():
     #     metric = evaluate.combine(["accuracy", "f1", "precision", "recall"])
     #     # metric = evaluate.load("accuracy")
     # metric = evaluate.combine(["accuracy", "f1", "precision", "recall"])
-    acc_metric = evaluate.load("accuracy")
-    f_metric = evaluate.load("f1")
-    r_metric = evaluate.load('recall')
-    p_metric = evaluate.load('precision')
     
 
     # You can define your custom compute_metrics function. It takes an `EvalPrediction` object (a namedtuple with a
@@ -554,15 +555,34 @@ def main():
 
         # print(p.label_ids)
         # result = metric.compute(predictions=preds, references=p.label_ids)
-        result = dict()
-        result.update(acc_metric.compute(predictions=preds, references=p.label_ids))
-        result.update(f_metric.compute(predictions=preds, references=p.label_ids,average="macro"))
-        result.update(p_metric.compute(predictions=preds, references=p.label_ids,average="macro"))
-        result.update(r_metric.compute(predictions=preds, references=p.label_ids,average="macro"))
-
-        result = {k: round(v * 100, 4) for k, v in result.items()}
+        metrics = dict()
+        yhat = preds
+        y = p.label_ids
+        f1 = np.append(f1_score(y_pred=yhat,y_true=y,zero_division=1, average='macro'), f1_score(y_pred=yhat,y_true=y,zero_division=1, average=None))
+        precision =  np.append(precision_score(y_pred=yhat,y_true=y,zero_division=1, average='macro'), precision_score(y_pred=yhat,y_true=y,zero_division=1, average=None))
+        recall =  np.append(recall_score(y_pred=yhat,y_true=y,zero_division=1, average='macro'), recall_score(y_pred=yhat,y_true=y,zero_division=1, average=None))
         
-        return result
+        metrics['overall_accuracy'] = accuracy_score(y_pred=yhat, y_true=y)
+        metrics['overall_f1'] = f1[0]
+        metrics['label_0_f1'] = f1[1]
+        metrics['label_1_f1'] = f1[2]
+        metrics['overall_recall'] = recall[0]
+        metrics['label_0_recall'] = recall[1]
+        metrics['label_1_recall'] = recall[2]
+        metrics['overall_precision'] = precision[0]
+        metrics['label_0_precision'] = precision[1]
+        metrics['label_1_precision'] = precision[2]
+        
+        #metrics table
+        t = PrettyTable(['label', 'accuracy', 'recall', 'precision', 'f1'])
+        t.add_row(['overall', metrics['overall_accuracy'], metrics['overall_recall'], metrics['overall_precision'], metrics['overall_f1']])
+        t.add_row(['label 0', '-', metrics['label_0_recall'], metrics['label_0_precision'], metrics['label_0_f1']])
+        t.add_row(['label 1', '-', metrics['label_1_recall'], metrics['label_1_precision'], metrics['label_1_f1']])
+        t.float_format = ".3f"
+        print(t)
+        metrics = {k: round(v * 100, 4) for k, v in metrics.items()}
+        wandb.log(metrics)
+        return metrics
         # if data_args.task_name is not None:
         #     result = metric.compute(predictions=preds, references=p.label_ids)
         #     if len(result) > 1:

@@ -2,6 +2,7 @@ gpu=$1
 batch=$2
 model=$3
 lr=$4  # 5e-4 for small, base and large; 1e-4 for 3b
+name=$5
 
 export out_dir="out/cls"
 export data_dir="./data"
@@ -40,4 +41,5 @@ python run_sen_cls.py \
     --max_seq_length 1024 \
     --classifier_dropout 0.2 \
     --label_column_name label \
-    --label2ids ${label2id_dir} 
+    --label2ids ${label2id_dir} \
+    --name ${name}
