@@ -106,11 +106,19 @@ F1, Precision, Recall for Label 0:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
 | T5-small | F1:  Precision: Recall:| F1: Precision: Recall: |F1:  Precision: Recall: |F1: Precision: Recall: |
+| T5-base | | | | |
+| T5-large | | | | |
+| roberta-base | | | | |
+| distilroberta-base | | | | |
 
 F1, Precision, Recall for Label 1:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
 | T5-small | F1:  Precision: Recall:| F1: Precision: Recall: |F1:  Precision: Recall: |F1: Precision: Recall: |
+| T5-base | | | | |
+| T5-large | | | | |
+| roberta-base | | | | |
+| distilroberta-base | | | | |
 ![image](https://github.com/RenzeLou/CSE_582_course_project/assets/36984321/93df4783-4abd-4ba5-95aa-26007a917411)
 
 
