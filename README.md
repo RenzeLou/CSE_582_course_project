@@ -119,6 +119,7 @@ F1, Precision, Recall for Label 1:
 | T5-large |F1: 72.4, Precision: 74.0, Recall: 70.9|F1: 72.8, Precision: 75.5, Recall: 70.2|F1: 74.5, Precision: 75.4, Recall: 73.7|F1: 72.8, Precision: 75.3, Recall: 70.5|
 | roberta-base |F1: 63.0, Precision: 63.6, Recall: 62.5|F1: 64.9, Precision: 66.8, Recall: 63.1|F1: 62.5, Precision: 67.0, Recall: 58.5|F1: 62.2, Precision: 69.3, Recall: 56.5|
 | distilroberta-base |F1: 59.8, Precision: 63.3, Recall: 56.7|F1: 63.8, Precision: 68.2, Recall: 59.9|F1: 61.5, Precision: 65.7, Recall: 57.8|F1: 63.3, Precision: 71.1, Recall: 57.1|
+
 ![image](https://github.com/RenzeLou/CSE_582_course_project/assets/36984321/93df4783-4abd-4ba5-95aa-26007a917411)
 
 
