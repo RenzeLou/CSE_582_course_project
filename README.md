@@ -105,7 +105,7 @@ Overall Accuracy， F1, Precision, and Recall:
 F1, Precision, Recall for Label 0:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
-| T5-small | F1:  Precision: Recall:| F1: Precision: Recall: |F1:  Precision: Recall: |F1: Precision: Recall: |
+| T5-small | F1: 88.5, Precision: 87.7, Recall: 89.3| F1: 89.6, Precision: 90.1, Recall: 89.2 |F1: 88.1, Precision: 87.8, Recall: 88.4|F1: Precision: Recall: |
 | T5-base | | | | |
 | T5-large | | | | |
 | roberta-base | | | | |
@@ -114,7 +114,7 @@ F1, Precision, Recall for Label 0:
 F1, Precision, Recall for Label 1:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
-| T5-small | F1:  Precision: Recall:| F1: Precision: Recall: |F1:  Precision: Recall: |F1: Precision: Recall: |
+| T5-small | F1: 74.0, Precision: 74.1, Recall: 73.9| F1: 76.2, Precision: 76.1, Recall: 76.4 |F1: 74.0, Precision: 74.0, Recall: 74.0|F1: Precision: Recall: |
 | T5-base | | | | |
 | T5-large | | | | |
 | roberta-base | | | | |
