@@ -105,20 +105,20 @@ Overall Accuracy， F1, Precision, and Recall:
 F1, Precision, Recall for Label 0:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
-| T5-small | F1: 88.5, Precision: 87.7, Recall: 89.3| F1: 89.6, Precision: 90.1, Recall: 89.2 |F1: 88.1, Precision: 87.8, Recall: 88.4|F1: Precision: Recall: |
-| T5-base | | | | |
-| T5-large | | | | |
-| roberta-base | | | | |
-| distilroberta-base | | | | |
+| T5-small | F1: 88.5, Precision: 87.7, Recall: 89.3| F1: 89.6, Precision: 90.1, Recall: 89.2 |F1: 88.1, Precision: 87.8, Recall: 88.4|F1: 88.1, Precision: 87.9, Recall: 88.4 |
+| T5-base |F1: 87.9, Precision: 87.6, Recall: 88.2|F1: 90.6, Precision: 90.9, Recall: 90.3 |F1: 87.4, Precision: 87.3, Recall: 87.6|F1: 90.8, Precision: 91.2, Recall: 90.5|
+| T5-large |F1: 87.8, Precision: 87.6, Recall: 88.1 |F1: 87.7, Precision: 87.9, Recall: 87.6|F1: 88.1, Precision: 88.0, Recall: 88.3|F1: 87.9, Precision: 89.1, Recall: 86.7|
+| roberta-base |F1: 85.9, Precision: 85.6, Recall: 86.3|F1: 86.4, Precision: 86.2, Recall: 86.7|F1: 85.9, Precision: 87.2, Recall: 84.7|F1: 85.9, Precision: 87.7, Recall: 84.1|
+| distilroberta-base |F1: 85.2, Precision: 85.9, Recall: 84.5|F1: 87.0, Precision: 87.2, Recall: 86.9|F1: 85.3, Precision: 86.9, Recall: 83.8|F1: 86.1, Precision: 88.3, Recall: 84.1|
 
 F1, Precision, Recall for Label 1:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
-| T5-small | F1: 74.0, Precision: 74.1, Recall: 73.9| F1: 76.2, Precision: 76.1, Recall: 76.4 |F1: 74.0, Precision: 74.0, Recall: 74.0|F1: Precision: Recall: |
-| T5-base | | | | |
-| T5-large | | | | |
-| roberta-base | | | | |
-| distilroberta-base | | | | |
+| T5-small | F1: 74.0, Precision: 74.1, Recall: 73.9| F1: 76.2, Precision: 76.1, Recall: 76.4 |F1: 72.4, Precision: 71.7, Recall: 73.2|F1: 74.3, Precision: 75.7, Recall: 73.0 |
+| T5-base |F1: 73.9, Precision: 75.6, Recall: 72.2|F1: 74.9, Precision: 76.3, Recall: 73.5|F1: 72.4, Precision: 73.5, Recall: 71.4|F1: 74.3, Precision: 75.4, Recall: 73.3|
+| T5-large |F1: 72.4, Precision: 74.0, Recall: 70.9|F1: 72.8, Precision: 75.5, Recall: 70.2|F1: 74.5, Precision: 75.4, Recall: 73.7|F1: 72.8, Precision: 75.3, Recall: 70.5|
+| roberta-base |F1: 63.0, Precision: 63.6, Recall: 62.5|F1: 64.9, Precision: 66.8, Recall: 63.1|F1: 62.5, Precision: 67.0, Recall: 58.5|F1: 62.2, Precision: 69.3, Recall: 56.5|
+| distilroberta-base |F1: 59.8, Precision: 63.3, Recall: 56.7|F1: 63.8, Precision: 68.2, Recall: 59.9|F1: 61.5, Precision: 65.7, Recall: 57.8|F1: 63.3, Precision: 71.1, Recall: 57.1|
 ![image](https://github.com/RenzeLou/CSE_582_course_project/assets/36984321/93df4783-4abd-4ba5-95aa-26007a917411)
 
 
