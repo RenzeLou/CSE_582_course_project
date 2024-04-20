@@ -59,7 +59,8 @@ def main():
     parser.add_argument("--seed",type=int,default=42)
     parser.add_argument("--split",action="store_true",default=False)
     parser.add_argument("--shuffle",type=bool,default=True)
-
+    parser.add_argument("--switch_with_intent",action="store_true",default=False)
+    parser.add_argument("--use_augmented",action="store_true",default=False)
     args, unparsed = parser.parse_known_args()
     if unparsed:
         raise ValueError(unparsed)
@@ -72,11 +73,14 @@ def main():
     
     random.seed(seed)
     np.random.seed(seed)
-    
+    train_file_name = 'train'
+    if args.use_augmented:
+        train_file_name = 'train_aug'
+
     os.makedirs(target_path,exist_ok=True)
 
     # open csv file
-    with open(os.path.join(source_path,"train" ,"train.csv"),"r") as f:
+    with open(os.path.join(source_path,"train" ,train_file_name+".csv"),"r") as f:
         reader = csv.reader(f)
         train_data = list(reader)
     with open(os.path.join(source_path, "test" ,"test.csv"),"r") as f:
@@ -94,6 +98,18 @@ def main():
         # convert the utt (string) to the dict
         utt_1 = string_to_dict(utt_1)
         utt_2 = string_to_dict(utt_2)
+        int_1 = utt_1['intent']
+        int_2 = utt_2['intent']
+        switch_1 = 0
+        switch_2 = 0
+        if args.switch_with_intent:
+            if utt_1['text'] == '': 
+                utt_1['text'] = int_1
+                switch_1 = 1
+            if utt_2['text'] == '': 
+                utt_2['text'] = int_2
+                switch_2 = 1
+
         label = label.strip()
         assert label in ["0","1"], "assert label should be 0 or 1. but got {}".format(label)
         text_1 = utt2text(utt_1)
@@ -121,13 +137,23 @@ def main():
         label, cate, utt_1, utt_2 = ins[0], ins[1], ins[2], ins[3]
         utt_1 = string_to_dict(utt_1)
         utt_2 = string_to_dict(utt_2)
+        switch_1 = 0
+        switch_2 = 0
+        if args.switch_with_intent:
+            if utt_1['text'] == '': 
+                utt_1['text'] = int_1
+                switch_1 = 1
+            if utt_2['text'] == '': 
+                utt_2['text'] = int_2
+                switch_2 = 1
+        
         label = label.strip()
         assert label in ["0","1"], "assert label should be 0 or 1. but got {}".format(label)
         text_1 = utt2text(utt_1)
         text_2 = utt2text(utt_2)
         test_samples.append((text_1,text_2,label))
         
-    
+    print(f'switch_intent:{args.switch_with_intent}, use_augmented_data:{args.use_augmented}')
     print("==> for classification")
     print("train samples: {}, eval samples: {}, test samples: {}".format(len(train_samples),len(eval_samples),len(test_samples)))
     save_nli_data_csv(train_samples,os.path.join(target_path,"train.csv"))
