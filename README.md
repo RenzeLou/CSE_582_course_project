@@ -93,6 +93,7 @@ The current performances by me are as follows:
 | T5-3b    | **85.50**  | **82.43**  |
 
 Experimental Result:
+Overall Accuracy， F1, Precision, and Recall:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
 | T5-small | ACC:83.9    F1:81.3  Precision:80.9 Recall:81.6 | ACC:85.6    F1:83.0 Precision:83.1 Recall:82.8 |ACC:83.9    F1:81.1  Precision:80.9 Recall:81.2 | ACC:84.3    F1:81.2 Precision:81.8 Recall:80.7 |
@@ -101,6 +102,15 @@ Experimental Result:
 | roberta-base | ACC:84.4    F1:74.5 Precision:74.6  Recall:74.4  | ACC:85.3    F1:75.7 Precision:76.5  Recall:74.9 |ACC:84.8    F1:74.2  Precision:77.1   Recall:71.6 | ACC:85.0    F1:74.2 Precision:78.5  Recall:70.3 |
 | distilroberta-base | ACC:83.6    F1:72.5  Precision:74.6  Recall:70.6 | ACC:85.4    F1:75.5 Precision:77.7  Recall:73.4 |ACC:84.9    F1:73.8  Precision:76.3  Recall:70.8 | ACC:85.5    F1:74.9 Precision:79.7  Recall:70.6 |
 
+F1, Precision, Recall for Label 0:
+| Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
+|----------|----------|----------|----------|----------|
+| T5-small | F1:  Precision: Recall:| F1: Precision: Recall: |F1:  Precision: Recall: |F1: Precision: Recall: |
+
+F1, Precision, Recall for Label 1:
+| Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
+|----------|----------|----------|----------|----------|
+| T5-small | F1:  Precision: Recall:| F1: Precision: Recall: |F1:  Precision: Recall: |F1: Precision: Recall: |
 ![image](https://github.com/RenzeLou/CSE_582_course_project/assets/36984321/93df4783-4abd-4ba5-95aa-26007a917411)
 
 
