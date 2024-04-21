@@ -81,6 +81,7 @@ I can run the above commands on the single-GPU server (with only 20 GB). You can
 
 The results are saved in `./out/cls` . For example, you can find the performance of `t5-3b` in file `./out/cls/t5-3b/predict_results.json`.
 
+
 **I have tried with different size T5 encoder. You guys can feel free to use any other encoder model.**
 
 The current performances by me are as follows:
@@ -93,6 +94,7 @@ The current performances by me are as follows:
 | T5-3b    | **85.50**  | **82.43**  |
 
 Experimental Result:
+T5 training graph:https://wandb.ai/jkys/CSE_582_course_project/reports/T5-training-results--Vmlldzo3NjMwNDgw
 Overall Accuracy， F1, Precision, and Recall:
 | Encoder Model    | Original Dataset without intent | Original Dataset with intent|Augmented Dataset without intent|Augmented Dataset with intent|
 |----------|----------|----------|----------|----------|
